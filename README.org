@@ -1,0 +1,13 @@
+* CLISPTS
+
+** Usage
+
+** Installation
+
+By default running =make install= installs the programs into the =XDG_BIN_HOME= directory. You can modify the =Makefile= if you want to change this location.
+
+#+begin_example
+git clone https://github.com/dylanjm/clispts ~/quicklisp/local-projects/clispts
+cd ~/quicklisp/local-projects/clispts
+make install
+#+end_example
