@@ -15,7 +15,7 @@
 (defparameter *ascii-chars* (coerce "@%#*+=-:., " 'list))
 (defparameter *fixed-width* 80 "Max width of ascii output.")
 (defparameter *fixed-height* 80 "Max height of ascii output.")
-(defparameter *output-color* :white "Ansi color to output.")
+(defparameter *output-color* nil "Ansi color to output.")
 
 (defun get-image-data (filename)
   (let ((img (opticl:read-image-file filename)))
@@ -95,9 +95,12 @@
     (let* ( (img (get-image-data (first free-args)))
             (scaled-img (resize-image-fixed img *fixed-width* *fixed-height*))
             (ascii-img (convert-image-to-ascii scaled-img)))
-      (cl-ansi-text:with-color (*output-color*)
-        (display-ascii-image ascii-img))))
+      (if *output-color*
 
-  (cl-scripting:success))
+        (cl-ansi-text:with-color (*output-color*)
+          (display-ascii-image ascii-img))
+        (display-ascii-image ascii-img)))
+
+  (cl-scripting:success)))
 
 (cl-scripting:register-commands :scraps/src/memes)
