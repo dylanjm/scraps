@@ -56,7 +56,7 @@
       :long         "size"
       :meta-var     "SIZE"
       :arg-parser   #'parse-size
-      :default      (list 80 80))
+      :default      (lambda () '(80 . 80)))
     ( :name         :inverse
       :description  "highlight the background"
       :short        #\i
@@ -66,7 +66,7 @@
       :short        #\c
       :long         "color"
       :meta-var     "COLOR"
-      :default      (intern "white" :keyword)
+      :default      :white
       :arg-parser   #'parse-color))
 
   (multiple-value-bind (options free-args)
@@ -92,11 +92,10 @@
     (when-option (options :color)
       (setf *output-color* (getf options :color)))
 
-    (let* ( (img (get-image-data (first free-args)))
+    (let* ( (img (get-image-data (second free-args)))
             (scaled-img (resize-image-fixed img *fixed-width* *fixed-height*))
             (ascii-img (convert-image-to-ascii scaled-img)))
       (if *output-color*
-
         (cl-ansi-text:with-color (*output-color*)
           (display-ascii-image ascii-img))
         (display-ascii-image ascii-img)))

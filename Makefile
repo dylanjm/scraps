@@ -2,7 +2,7 @@ NAME=scraps
 DEST=$(XDG_BIN_HOME)
 BINARY=$(DEST)/$(NAME)
 SCRIPT=$(PWD)/$(NAME)
-CL=cl-launch
+CL=../cl-launch/cl-launch.sh
 LISP=sbcl
 
 .PHONY: all $(NAME) test clean
